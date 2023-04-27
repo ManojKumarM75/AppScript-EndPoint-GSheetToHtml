@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        tr {
+            background-color: lightGrey;
+        }
+        
+        tr:nth-child(2n) {
+            background-color: grey;
+        }
+    </style>
+</head>
+ 
+<body>
+    <table></table>
+    <script>
+        fetch('https://script.google.com/macros/s/AKfycbzn2e0bH7fCyaJiDHBokTBVnOgtHAkNjWbqvR_f5GD_o87l3T8RLVpuwkLMdQb7ULnsvw/exec')
+            .then(res => res.json())
+            .then(data => {
+                let tr = data.content.reduce((prev, cur) => {
+                    let td = cur.map(e => `<td>${e}</td>`)
+                    return prev + `<tr>${td.join("")}</tr>`
+                }, "\r")
+                document.querySelector("table").innerHTML = tr;
+                
+            });
+    </script>
+</body>
+ 
+</html>
