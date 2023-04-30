@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        tr {
+            background-color: lightGrey;
+        }
+        
+        tr:nth-child(2n) {
+            background-color: rgb(155, 211, 212);
+        }
+    </style>
+</head>
+ 
+<body>
+<table id="table1"></table>
+<table id="table2"></table>
+
+  <script>
+    var url = "https://docs.google.com/spreadsheets/d/1V3yJNLWNhsnDXOXkoOxMxYX9FeYCnt0LWMZMdabtnTg/edit?usp=sharing";  //my doc - direct , NOTWORKING     
+    var  api = 'https://script.google.com/macros/s/AKfycbzn2e0bH7fCyaJiDHBokTBVnOgtHAkNjWbqvR_f5GD_o87l3T8RLVpuwkLMdQb7ULnsvw/exec' //WORKS
+
+/*    fetch(api) //only api works
+        .then(res => res.json())
+        .then(data => {
+            let tr = data.content.reduce((prev, cur) => { 
+                //data.content is an array of arrays, where each inner array represents a row of data from a Google Sheets document.
+                // The reduce() method is being used to iterate over this array of arrays and accumulate an HTML string representing an HTML table.
+                //The callback function passed to reduce() takes two arguments: prev and cur. prev is the accumulated value from previous iterations,
+                // and cur is the current element in the array being iterated over.
+                let td = cur.map(e => `<td>${e}</td>`)
+                console.log(td);
+                //Inside the callback function, the map() method is called on the cur array to create a new array of table cell elements (<td>). 
+                //The map() method creates a new array by applying a callback function to each element in the original array.
+                //the callback function passed to map() creates a new string for each element in the cur array, 
+                //representing an HTML table cell containing the value of the element.
+                return prev + `<tr>${td.join("")}</tr>`
+                //The resulting array of HTML table cell strings is then concatenated together into a single string using the join() method, 
+                //with an empty string as the separator. This creates a single string representing an HTML table row (<tr>).
+                //Finally, the callback function returns the accumulated value so far (prev) concatenated with the new HTML table row string 
+                //created in the previous step. This process is repeated for each row in the data.content array, resulting in a single HTML string representing an HTML table.
+            }, "\r")
+            //document.querySelector("table1").innerHTML = tr;
+            document.getElementById("table1").innerHTML = tr;
+        });
+
+
+
+    fetch(api) //only api works
+        .then(res => res.json())
+        .then(data => {
+            let tr = data.content.reduce((prev, cur) => { 
+                //data.content is an array of arrays, where each inner array represents a row of data from a Google Sheets document.
+                // The reduce() method is being used to iterate over this array of arrays and accumulate an HTML string representing an HTML table.
+                //The callback function passed to reduce() takes two arguments: prev and cur. prev is the accumulated value from previous iterations,
+                // and cur is the current element in the array being iterated over.
+                //let td = cur.map(e => `${e}`)
+                //let td = '<td>' + cur[0] + '<br>' + cur[1] + '</td>';
+                let td = '';
+                for (let i = 0; i < cur.length; i++) {
+                    td = td + '<td>' + cur[i] + '<td>';
+                    //console.log(cur[i]);
+                }
+                return prev  + `<tr>${td}</tr>`
+                //The resulting array of HTML table cell strings is then concatenated together into a single string using the join() method, 
+                //with an empty string as the separator. This creates a single string representing an HTML table row (<tr>).
+                //Finally, the callback function returns the accumulated value so far (prev) concatenated with the new HTML table row string 
+                //created in the previous step. This process is repeated for each row in the data.content array, resulting in a single HTML string representing an HTML table.
+            }, "\r")
+            document.getElementById("table1").innerHTML = tr;
+        });
+*/
+        fetch(api) //only api works
+        .then(res => res.json())
+        .then(data => {
+            d = data.content;
+            let tr = '';
+            for (let i = 0; i < d.length; i++) {
+                //console.log(d[i]);
+                let td = '';
+                for (let x = 0; x < d[i].length; x++) {
+                    if (i == 0){
+                        td = td + '<th>' + d[i][x] + '<th>';
+                    } else {
+                        td = td + '<td>' + d[i][x] + '<td>';
+                    }
+                    
+                    //console.log(d[i][x]);
+                }
+                tr =  tr + `<tr>${td}</tr>`;
+            }
+            document.getElementById("table2").innerHTML = tr;
+        }
+        );
+
+</script>
+
+<!---
+ChatGPT: This code appears to be fetching data from the api URL using the Fetch API, then parsing the response as JSON and 
+formatting the data as an HTML table before inserting it into the table element on the HTML page.
+The fetch function makes a GET request to the api URL, which should return a JSON response containing the data from the Google Sheets document. 
+The then method is then used to parse the response as JSON and process the resulting data.
+The reduce method is used to loop through the rows of data in the content property of the JSON response, 
+and format each row as an HTML table row with individual table cells (<td> elements). 
+The resulting HTML table rows are concatenated together into a single string using the join method, 
+with each row separated by a newline character (\r).
+Finally, the resulting HTML table rows are inserted into the table element on the HTML page using the innerHTML property.
+--->
+</body>
+ 
+</html>
